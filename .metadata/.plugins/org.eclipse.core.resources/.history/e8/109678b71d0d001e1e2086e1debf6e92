@@ -1,0 +1,122 @@
+package jdbcProject;
+
+import java.sql.*;
+import java.util.Scanner;
+
+public class Sample {
+
+	public static void main(String[] args) throws Exception {
+		// TODO Auto-generated method stub
+		Scanner scanner = new Scanner(System.in);
+		boolean flag = true;
+		while (flag) {
+			System.out.println(
+					"\n\nInitially select 1 and 2 to create the database and the table \n1.Create Database \n2.Create Table"
+							+ "\n3.Add the details in the table \n4.Update the name by id \n5.Fetch by id \n6.Fetch all the details \n7.Remove by id "
+							+ "\n8.Remove All details in the table \n9.Delete the Table \n10.Delete the Database \n11.Exit\n");
+			switch (scanner.nextInt()) {
+			case 1: { // DATABASE CREATION
+				Connection c = DriverManager.getConnection("jdbc:mysql://localhost:3306", "root", "root");
+				PreparedStatement ps = c.prepareStatement("create database demo1");
+				ps.execute();
+				System.out.println("DATABASE HAS BEEN CREATED");
+				c.close();
+			}
+				break;
+			case 2: { // TABLE CREATION INSIDE THE DATABASE
+				Connection c = DriverManager.getConnection("jdbc:mysql://localhost:3306/demo1", "root", "root");
+				PreparedStatement ps = c.prepareStatement(
+						"create table std_info (id integer primary key, name varchar(20), phno bigint unique)");
+				ps.execute();
+				System.out.println("TABLE HAS BEEN CREATED INSIDE THE DATABASE");
+				c.close();
+			}
+				break;
+			case 3: { // INSERT THE VALUES IN THE TABLE
+				Connection c = DriverManager.getConnection("jdbc:mysql://localhost:3306/demo1", "root", "root");
+				PreparedStatement ps = c.prepareStatement("insert into std_info values(?,?,?)");
+				System.out.println("Enter Student id");
+				ps.setInt(1, scanner.nextInt());
+				System.out.println("Enter Student name");
+				ps.setString(2, scanner.next());
+				System.out.println("Enter Student phno");
+				ps.setLong(3, scanner.nextLong());
+				ps.execute();
+				c.close();
+			}
+				break;
+			case 4: { // UPDATE THE NAME BY id --> PRIMARY KEY
+				Connection c = DriverManager.getConnection("jdbc:mysql://localhost:3306/demo1", "root", "root");
+				PreparedStatement ps = c.prepareStatement("update std_info set name =? where id =?");
+				System.out.println("Enter the student id");
+				ps.setInt(2, scanner.nextInt());
+				System.out.println("Enter the new student name");
+				ps.setString(1, scanner.next());
+				System.out.println("NAME HAS BEEN UPDATED");
+				c.close();
+			}
+				break;
+			case 5: { // FETCH BY id
+				Connection c = DriverManager.getConnection("jdbc:mysql://localhost:3306/demo1", "root", "root");
+				PreparedStatement ps = c.prepareStatement("select * from std_info where id = ?");
+				System.out.println("Enter the student id");
+				ps.setInt(1, scanner.nextInt());
+				ResultSet r = ps.executeQuery();
+				r.next();
+				System.out.println("Student id --> " + r.getInt(1) + "; Student Name --> " + r.getString(2)
+						+ "; Student phno --> " + r.getLong(3));
+				c.close();
+			}
+				break;
+			case 6: { // FETCH ALL THE VALUES
+				Connection c = DriverManager.getConnection("jdbc:mysql://localhost:3306/demo1", "root", "root");
+				PreparedStatement ps = c.prepareStatement("select * from demo1");
+				ResultSet r = ps.executeQuery();
+				while (r.next()) {
+					System.out.println("Student id --> " + r.getInt(1) + "; Student name --> " + r.getString(2)
+							+ "; Student phno --> " + r.getLong(3));
+					c.close();
+				}
+			}
+				break;
+			case 7: { // REMOVE VALUE BY id
+				Connection c = DriverManager.getConnection("jdbc:mysql://localhost:3306/demo1","root", "root");
+				PreparedStatement ps = c.prepareStatement("delete from std_info where id = ?");
+				System.out.println("Enter the Student id to delete the student info");
+				ps.setInt(1, scanner.nextInt());
+				ps.executeUpdate();
+				c.close();
+			}
+				break;
+			case 8: {	//REMOVE ALL STUDENT DETAILS
+				Connection c = DriverManager.getConnection("jdbc:mysql://localhost:3306/demo1", "root", "root");
+				PreparedStatement ps = c.prepareStatement("delete from std_info");
+				ps.executeUpdate();
+				System.out.println("ALL THE DATA IN DATABASE HAS BEEN DELETED");
+				c.close();
+			}
+				break;
+			case 9: { // DELETE THE TABLE
+				Connection c = DriverManager.getConnection("jdbc:mysql://localhost:3306/demo1", "root", "root");
+				PreparedStatement ps = c.prepareStatement("drop table std_info");
+				ps.executeUpdate();
+				c.close();
+			}
+				break;
+			case 10: { // DELETE THE DATABASE
+				Connection c = DriverManager.getConnection("jdbc:mysql://localhost:3306/demo1", "root", "root");
+				PreparedStatement ps = c.prepareStatement("drop database demo1");
+				System.out.println("DATABASE HAS BEEN DELETED");
+				ps.executeUpdate();
+				c.close();
+			}
+				break;
+			case 11: {
+				flag = false;
+			}
+				break;
+
+			}
+		}
+	}
+}

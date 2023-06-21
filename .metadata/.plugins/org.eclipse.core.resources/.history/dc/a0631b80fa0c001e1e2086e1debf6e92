@@ -1,0 +1,11 @@
+package jdbcProject;
+import java.sql.*;
+
+public class CreateTable {
+
+	public static void main(String[] args) throws Exception{
+		// TODO Auto-generated method stub
+		
+	}
+
+}

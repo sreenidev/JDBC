@@ -1,0 +1,12 @@
+package jdbcProject;
+import java.sql.*;
+
+public class CreateTable {
+
+	public static void main(String[] args) throws Exception{
+		// TODO Auto-generated method stub
+		Connection c = DriverManager.getConnection("jdbc:mysql://localhost/demo1","root","root");
+		PreparedStatement ps = c.prepareStatement("create table std_info").exe;
+	}
+
+}

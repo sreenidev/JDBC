@@ -1,0 +1,6 @@
+INDEX VERSION 1.131+F:\JSpiders\NewEclipse\J2EE\JDBC\.metadata\.plugins\org.eclipse.jdt.core
+3715758701.index
+2506192191.index
+3351632749.index
+1865797976.index
+3479316535.index
