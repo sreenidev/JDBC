@@ -29,6 +29,7 @@ public class Sample {
 						"create table std_info (id integer primary key, name varchar(20), phno bigint unique)");
 				ps.execute();
 				System.out.println("TABLE HAS BEEN CREATED INSIDE THE DATABASE");
+				System.out.println("------------------------------------------");
 				c.close();
 			}
 				break;
